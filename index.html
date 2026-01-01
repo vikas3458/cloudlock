@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudLock - Fast & Secure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-md mx-auto mt-10">
+        <div class="glass p-8 rounded-3xl shadow-2xl">
+            <h1 class="text-3xl font-bold text-center mb-8 text-blue-400">CloudLock</h1>
+            
+            <form action="/process" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <div class="p-4 bg-white/5 border border-dashed border-gray-500 rounded-xl text-center">
+                    <input type="file" name="file" id="fileInput" class="w-full text-sm cursor-pointer" required>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-3">
+                    <button type="submit" name="action" value="encrypt" class="bg-blue-600 hover:bg-blue-700 p-3 rounded-xl font-bold transition active:scale-95">🔒 Encrypt & Download</button>
+                    <button type="submit" name="action" value="decrypt" class="bg-indigo-600 hover:bg-indigo-700 p-3 rounded-xl font-bold transition active:scale-95">🔓 Decrypt & Download</button>
+                    <button type="submit" name="action" value="store" class="bg-green-600 hover:bg-green-700 p-3 rounded-xl font-bold transition active:scale-95">☁️ Store Online</button>
+                </div>
+            </form>
+
+            <div class="mt-10">
+                <h2 class="text-xl font-semibold mb-4 border-b border-gray-700 pb-2">Stored Files</h2>
+                <div class="space-y-3">
+                    {% if files %}
+                        {% for file in files %}
+                        <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl">
+                            <span class="truncate w-32 text-sm">{{ file.name }}</span>
+                            <a href="/download/{{ file.name }}" class="text-blue-400 font-bold text-sm">Download</a>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-gray-500 text-sm">No files stored yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Button click hone par feedback ke liye
+        const form = document.querySelector('form');
+        form.onsubmit = () => {
+            console.log("Form is being submitted...");
+        };
+    </script>
+</body>
+</html>
